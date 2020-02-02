@@ -28,17 +28,17 @@ class AsignaturasController extends Controller
     {
         //$data = $request->json()->all();
 
-        $sql = 'SELECT estudiantes.* 
-                FROM 
-                  matriculas inner join informacion_estudiantes on matriculas.id = informacion_estudiantes.matricula_id 
-	              inner join estudiantes on matriculas.estudiante_id = estudiantes.id 
+        $sql = 'SELECT estudiantes.*
+                FROM
+                  matriculas inner join informacion_estudiantes on matriculas.id = informacion_estudiantes.matricula_id
+	              inner join estudiantes on matriculas.estudiante_id = estudiantes.id
 	            WHERE matriculas.periodo_lectivo_id = 1 and matriculas.estudiante_id =1';
         $estudiante = DB::select($sql);
 
-        $sql = 'SELECT informacion_estudiantes.* 
-                FROM 
-                  matriculas inner join informacion_estudiantes on matriculas.id = informacion_estudiantes.matricula_id 
-	              inner join estudiantes on matriculas.estudiante_id = estudiantes.id 
+        $sql = 'SELECT informacion_estudiantes.*
+                FROM
+                  matriculas inner join informacion_estudiantes on matriculas.id = informacion_estudiantes.matricula_id
+	              inner join estudiantes on matriculas.estudiante_id = estudiantes.id
 	            WHERE matriculas.periodo_lectivo_id = 1 and matriculas.estudiante_id =1';
         $informacionEstudiante = DB::select($sql);
         return response()->json([
@@ -69,17 +69,17 @@ class AsignaturasController extends Controller
             $dataEstudiante['tipo_documento'],
             $dataEstudiante['tipo_colegio'],
         ];
-        $sql = 'SELECT estudiantes.* 
-                FROM 
-                  matriculas inner join informacion_estudiantes on matriculas.id = informacion_estudiantes.matricula_id 
-	              inner join estudiantes on matriculas.estudiante_id = estudiantes.id 
+        $sql = 'SELECT estudiantes.*
+                FROM
+                  matriculas inner join informacion_estudiantes on matriculas.id = informacion_estudiantes.matricula_id
+	              inner join estudiantes on matriculas.estudiante_id = estudiantes.id
 	            WHERE matriculas.periodo_lectivo_id = 1 and matriculas.estudiante_id =1';
         $estudiante = DB::select($sql, null);
 
-        $sql = 'SELECT informacion_estudiantes.* 
-                FROM 
-                  matriculas inner join informacion_estudiantes on matriculas.id = informacion_estudiantes.matricula_id 
-	              inner join estudiantes on matriculas.estudiante_id = estudiantes.id 
+        $sql = 'SELECT informacion_estudiantes.*
+                FROM
+                  matriculas inner join informacion_estudiantes on matriculas.id = informacion_estudiantes.matricula_id
+	              inner join estudiantes on matriculas.estudiante_id = estudiantes.id
 	            WHERE matriculas.periodo_lectivo_id = 1 and matriculas.estudiante_id =1';
         $informacionEstudiante = DB::select($sql, null);
         return response()->json([

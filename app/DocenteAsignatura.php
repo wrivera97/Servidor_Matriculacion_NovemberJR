@@ -17,7 +17,7 @@ public function docente(){
     return $this->belongsTo('App/Docente') ;
 }
 
-public function  asginatura(){
+public function  asignatura(){
     return $this->belongsTo('App/Asignatura') ;
 }
 

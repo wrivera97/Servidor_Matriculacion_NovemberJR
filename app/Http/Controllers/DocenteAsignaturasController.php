@@ -9,12 +9,12 @@ use Illuminate\Http\Request;
 
 class DocenteAsignaturasController extends Controller
 {
-    public function asignardocentesasisnaturas(Request $request)
+    public function asignardocentesasignaturas(Request $request)
     {
 
 
         $data = $request->json()->all();
-        //Datas all
+
     $dataDocenteAsignaturas = $data['docenteasignaturas'];
     $dataDocente = $data['docente'];
     $dataPeriodo = $data['periodo'];
@@ -30,14 +30,17 @@ class DocenteAsignaturasController extends Controller
        $dataDocenteAsignaturas->docente()->associate($docente);
 
        $periodolectivo = PeriodoLectivo::findOrFail($dataPeriodo['periodo']['id']);
-       $dataDocenteAsignaturas->periodoLectivo()->associate($periodolectivo);
+       $dataDocenteAsignaturas->periodolectivo()->associate($periodolectivo);
 
        $asignatura = Asignatura::findOrFail($dataAsignatura['asignatura']['id']);
        $dataDocenteAsignaturas->asignatura()->associate($asignatura);
 
        $dataDocenteAsignaturas->save();
-
+}
+public function getasignacionDocentes(){}
+public function deleteasignacionDocentes(){}
+public function updateasignacionDocentes(){}
 
 
 }
-}
+

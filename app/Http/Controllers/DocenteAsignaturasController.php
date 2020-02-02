@@ -7,15 +7,6 @@ use App\Docente;
 use App\Asignatura;
 use Illuminate\Http\Request;
 
-//instancia
-$docenteasignatura = new DocenteAsignatura([
-  "paraelo"=>'1',
-    "jornada"=>'1'
-
-]);
-
-
-
 class DocenteAsignaturasController extends Controller
 {
     public function asignardocentesasisnaturas(Request $request)

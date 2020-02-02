@@ -16,7 +16,7 @@ $docenteasignatura = new DocenteAsignatura([
 
 
 
-class DocentesAsignaturasController extends Controller
+class DocenteAsignaturasController extends Controller
 {
     public function asignardocentesasisnaturas(Request $request)
     {

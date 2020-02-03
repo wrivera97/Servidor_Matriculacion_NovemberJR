@@ -1,5 +1,8 @@
 <?php
 use App\DocenteAsignatura;
+use App\Asignatura;
+use App\Docente;
+use App\PeriodoLectivo;
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -7,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class DocenteAsignatura extends Model
 {
     protected $fillable =[
-    'parelelo',
+    'paralelo',
     'jornada'
     ];
 

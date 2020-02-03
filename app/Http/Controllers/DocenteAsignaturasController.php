@@ -6,41 +6,62 @@ use App\PeriodoLectivo;
 use App\Docente;
 use App\Asignatura;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class DocenteAsignaturasController extends Controller
 {
-    public function asignardocentesasignaturas(Request $request)
+    public function AsignarDocentesAsignaturas(Request $request)
     {
-
-
-        $data = $request->json()->all();
-
+    $data = $request->json()->all();
     $dataDocenteAsignaturas = $data['docenteasignaturas'];
     $dataDocente = $data['docente'];
     $dataPeriodo = $data['periodo'];
     $dataAsignatura = $data['asignatura'];
 
     $docenteasignaturas = new DocenteAsignatura([
-
-           'paralelo' => $dataDocenteAsignaturas['paralelo'],
-        'jornada' => $dataDocenteAsignaturas['jornada']
-        ]);
+    'paralelo' => $dataDocenteAsignaturas['paralelo'],
+     'jornada' => $dataDocenteAsignaturas['jornada']
+    ]);
 
        $docente = Docente::findOrFail($dataDocente['docente']['id']);
-       $dataDocenteAsignaturas->docente()->associate($docente);
+       $docenteasignaturas->docente()->associate($docente);
 
        $periodolectivo = PeriodoLectivo::findOrFail($dataPeriodo['periodo']['id']);
-       $dataDocenteAsignaturas->periodolectivo()->associate($periodolectivo);
+       $docenteasignaturas->periodolectivo()->associate($periodolectivo);
 
        $asignatura = Asignatura::findOrFail($dataAsignatura['asignatura']['id']);
-       $dataDocenteAsignaturas->asignatura()->associate($asignatura);
+       $docenteasignaturas->asignatura()->associate($asignatura);
 
-       $dataDocenteAsignaturas->save();
+       $docenteasignaturas->save();
+
 }
-public function getasignacionDocentes(){}
-public function deleteasignacionDocentes(){}
-public function updateasignacionDocentes(){}
+
+public function getAsignacionDocentes( Request $request){
+
+   $data = $request->json()->all();
+   $dataDocenteid=$data['cedula_docente'];
+
+$docentesced=db::table('docentes')
+->select('nombre1','apellido1','tipo_identificacion','jornada','paralelo',
+        'nombre as nombre_asignatura','codigo','asignaturas.estado','identificacion')
+->leftJoin('docente_asignaturas','docentes.id','=','docente_asignaturas.docente_id')
+->leftJoin('asignaturas','asignaturas.id','=','docente_asignaturas.asignatura_id')
+->where('docentes.identificacion','=', $dataDocenteid=$data['cedula_docente'])->get();
+
+if ($docentesced) {
+return response()->json([$docentesced], 200);
+}
+else{
+    return response()->json([$docentesced], 500);
+}
+}
 
 
+public function deleteasignacionDocentes(){
+    //this function is only with url
+}
+public function updateasignacionDocentes(){
+
+    //this function is the same, what the function create
+}
 }
 

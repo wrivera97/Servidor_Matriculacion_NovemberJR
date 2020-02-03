@@ -33,4 +33,5 @@ class DetalleMatricula extends Model implements Auditable
     {
         return $this->belongsTo('App\Asignatura');
     }
+
 }

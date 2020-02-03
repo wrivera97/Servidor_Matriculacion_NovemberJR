@@ -134,7 +134,7 @@ Route::post('/docentes', 'DocentesController@createD');
 Route::put('/docentes', 'DocentesController@updateD');
 Route::delete('/docentes', 'DocentesController@deleteD');
 //API ASIGNACION_DOCENTES
-//Route::get('/asignacionDocentes', 'DocentesAsignaturasController@listD');
-Route::post('/asignaciondocentes', 'DocenteAsignaturasController@asignardocentesasignaturas');
+Route::get('/asignacionDocentes', 'DocenteAsignaturasController@getAsignacionDocentes');
+Route::post('/asignacionDocentes', 'DocenteAsignaturasController@AsignarDocentesAsignaturas');
 //Route::put('/asignacionDocentes', 'DocentesAsignaturasController@updateD');
 //Route::delete('/asignacionDocentes', 'DocentesAsignaturasController@deleteD');

@@ -17,15 +17,15 @@ class DocenteAsignatura extends Model
 
 
 public function docente(){
-    return $this->belongsTo('App/Docente') ;
+    return $this->belongsTo('App\Docente') ;
 }
 
 public function  asignatura(){
-    return $this->belongsTo('App/Asignatura') ;
+    return $this->belongsTo('App\Asignatura') ;
 }
 
-public function  periodolectivo(){
-    return $this->belongsTo('App/PeriodoLectivo');
+public function  periodoLectivo(){
+    return $this->belongsTo('App\PeriodoLectivo');
 }
 
 }

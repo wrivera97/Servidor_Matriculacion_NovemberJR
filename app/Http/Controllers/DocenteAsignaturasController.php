@@ -12,7 +12,7 @@ class DocenteAsignaturasController extends Controller
     public function AsignarDocentesAsignaturas(Request $request)
     {
     $data = $request->json()->all();
-    $dataDocenteAsignaturas = $data['docenteasignaturas'];
+    $dataDocenteAsignaturas = $data['docenteasignatura'];
     $dataDocente = $data['docente'];
     $dataPeriodo = $data['periodo'];
     $dataAsignatura = $data['asignatura'];
@@ -22,37 +22,26 @@ class DocenteAsignaturasController extends Controller
      'jornada' => $dataDocenteAsignaturas['jornada']
     ]);
 
-       $docente = Docente::findOrFail($dataDocente['docente']['id']);
+       $docente = Docente::findOrFail($dataDocente['id']);
+
        $docenteasignaturas->docente()->associate($docente);
 
-       $periodolectivo = PeriodoLectivo::findOrFail($dataPeriodo['periodo']['id']);
-       $docenteasignaturas->periodolectivo()->associate($periodolectivo);
+       $periodolectivo = PeriodoLectivo::findOrFail($dataPeriodo['id']);
+       $docenteasignaturas->periodoLectivo()->associate($periodolectivo);
 
-       $asignatura = Asignatura::findOrFail($dataAsignatura['asignatura']['id']);
+       $asignatura = Asignatura::findOrFail($dataAsignatura['id']);
        $docenteasignaturas->asignatura()->associate($asignatura);
 
        $docenteasignaturas->save();
 
 }
 
-public function getAsignacionDocentes( Request $request){
+public function getDocenteAsignatura( Request $request){
 
-   $data = $request->json()->all();
-   $dataDocenteid=$data['cedula_docente'];
-
-$docentesced=db::table('docentes')
-->select('nombre1','apellido1','tipo_identificacion','jornada','paralelo',
-        'nombre as nombre_asignatura','codigo','asignaturas.estado','identificacion')
-->leftJoin('docente_asignaturas','docentes.id','=','docente_asignaturas.docente_id')
-->leftJoin('asignaturas','asignaturas.id','=','docente_asignaturas.asignatura_id')
-->where('docentes.identificacion','=', $dataDocenteid=$data['cedula_docente'])->get();
-
-if ($docentesced) {
-return response()->json([$docentesced], 200);
-}
-else{
-    return response()->json([$docentesced], 500);
-}
+   $docenteAsignatura = DocenteAsignatura::select('docente_id')->with('docente')->get();
+   return response()->json(['asignaciones' => $docenteAsignatura], 200);
+  /* $datadocentes=$docenteAsignatura=DocenteAsignatura::where('docente_id')->with('docente')->get()->first();
+   return response()->json(['asignaciones' => $datadocentes], 200);*/
 }
 
 

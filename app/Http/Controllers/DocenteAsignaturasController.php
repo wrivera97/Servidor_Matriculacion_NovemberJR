@@ -9,25 +9,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class DocenteAsignaturasController extends Controller
 {
-
     public function getDocenteAsignatura( Request $request){
-        /*$docenteAsignatura = DocenteAsignatura::select('id as id_asignacion','jornada','paralelo','docente_id','asignatura_id')
-          ->with('docente')->where('docente_id',$request->docente_id)->get();
-        return response()->json($docenteAsignatura, 200);*/
 
+$docente=Docente::where('identificacion',$request->identificacion)->first();
 
+    $docenteAsignaturas = DocenteAsignatura::where('docente_id',$docente->id)->where('periodo_lectivo_id',$request->periodo_lectivo_id)->with('asignatura') ->get();
 
-     //$test=DocenteAsignatura::with('docente');
-     //$test1=$test->where('docente_id','1')->get();
-     //return response()->json($test1, 200);
-
-     $test0 = DocenteAsignatura::select('docente_asignaturas.id as #asignacion','jornada','docentes.id as docente_id',
-                                        'paralelo','identificacion','asignatura_id')
-                                 ->join('docentes', 'docente_asignaturas.docente_id', 'docentes.id');
-
-     $test1=$test0->where('identificacion',$request->cedula)->get();
-if($test1){
-     return response()->json(['asignacionesDocente' => $test1], 200);
+    if($docente){
+     return response()->json(['asignacionesDocente' => $docenteAsignaturas], 200);
      }
      return response()->json('error',500);
     }
@@ -49,7 +38,6 @@ if($test1){
     ]);
 
        $docente = Docente::findOrFail($dataDocente['id']);
-
        $docenteasignaturas->docente()->associate($docente);
 
        $periodolectivo = PeriodoLectivo::findOrFail($dataPeriodo['id']);
@@ -59,7 +47,7 @@ if($test1){
        $docenteasignaturas->asignatura()->associate($asignatura);
        $docenteasignaturas->save();
 
-if($dataAll){
+ if($dataAll){
         return response()->json([''=>$dataAll],200);
 
 }
@@ -67,8 +55,11 @@ if($dataAll){
             return response()->json('error',500) ;
 }
 
-public function updateasignacionDocentes(Request $request){
-    $data = $request->json()->all();
+public function updateAsignaturaDocente(Request $request){
+
+    try{
+    DB::beginTransaction();
+    $data=$request->json()->all();
     $dataDocenteAsignaturas = $data['docenteasignatura'];
     $dataDocente = $data['docente'];
     $dataPeriodo = $data['periodo'];
@@ -76,36 +67,42 @@ public function updateasignacionDocentes(Request $request){
 
     $dataAll=[$dataDocenteAsignaturas,$dataDocente,$dataPeriodo ,$dataAsignatura];
 
-    $docenteId=Docente::findOrFail($ocenteId['id']);
-    $docenteId->update([  /**/  ]);
+    $docenteAsignatura = DocenteAsignatura::findOrFail($dataDocenteAsignaturas['id']);
 
-    $docenteasignaturas = new DocenteAsignatura([
+    $docenteAsignatura->update([
+
     'paralelo' => $dataDocenteAsignaturas['paralelo'],
      'jornada' => $dataDocenteAsignaturas['jornada']
     ]);
+    $docente = Docente::findOrFail($dataDocente['id']);
+    $docenteAsignatura->docente()->associate($docente);
 
-       $docente = Docente::findOrFail($dataDocente['id']);
+    $periodolectivo = PeriodoLectivo::findOrFail($dataPeriodo['id']);
+    $docenteAsignatura->periodoLectivo()->associate($periodolectivo);
 
-       $docenteasignaturas->docente()->associate($docente);
+    $asignatura = Asignatura::findOrFail($dataAsignatura['id']);
+    $docenteAsignatura->asignatura()->associate($asignatura);
 
-       $periodolectivo = PeriodoLectivo::findOrFail($dataPeriodo['id']);
-       $docenteasignaturas->periodoLectivo()->associate($periodolectivo);
+    $docenteAsignatura->save();
 
-       $asignatura = Asignatura::findOrFail($dataAsignatura['id']);
-       $docenteasignaturas->asignatura()->associate($asignatura);
-       $docenteasignaturas->save();
+DB::commit();
 
 if($dataAll){
-        return response()->json([''=>$dataAll],200);
+
+    return response()->json(['succesfull'=>$dataAll],200);
 
 }
 
-            return response()->json('error',500) ;
+        return response()->json('error',500) ;
+        //cierra el try
+    }
+
+    catch (Exception $e) {
+        return response()->json($e, 500);
+    }
+
 }
-
-
-
-    public function deleteasignacionDocentes(){
+  public function deleteasignacionDocentes(){
         //this function is only with url
     }
 }

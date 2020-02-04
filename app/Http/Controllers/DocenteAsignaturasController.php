@@ -67,7 +67,7 @@ if($dataAll){
             return response()->json('error',500) ;
 }
 
-public function updateasignacionDocentes(){
+public function updateasignacionDocentes(Request $request){
     $data = $request->json()->all();
     $dataDocenteAsignaturas = $data['docenteasignatura'];
     $dataDocente = $data['docente'];
@@ -78,9 +78,7 @@ public function updateasignacionDocentes(){
 
     $docenteId=Docente::findOrFail($ocenteId['id']);
     $docenteId->update([  /**/  ]);
-    if(){
 
-    };
     $docenteasignaturas = new DocenteAsignatura([
     'paralelo' => $dataDocenteAsignaturas['paralelo'],
      'jornada' => $dataDocenteAsignaturas['jornada']

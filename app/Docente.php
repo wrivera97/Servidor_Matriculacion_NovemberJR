@@ -12,5 +12,7 @@ class Docente extends Model
         'identificacion','genero','fecha_nacimiento','correo_personal','correo_institucional',
         'discapacidad','tipo_sangre','direccion','etnia','pueblo_nacionalidad','estado'
         ];
-
+public function docenteAsignatura(){
+return $this->Belongsto('App\DocenteAsignatura');
+}
 }

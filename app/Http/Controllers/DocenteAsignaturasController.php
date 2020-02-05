@@ -102,9 +102,17 @@ if($dataAll){
     }
 
 }
-  public function deleteasignacionDocentes(){
-        //this function is only with url
+  public function deleteAsignacionDocente( Request $request){
+
+    DB::beginTransaction();
+    $DocenteAsigntura = DocenteAsignatura::findOrFail($request->id)
+    ->delete();
+    DB::commit();
+    if($DocenteAsigntura){
+    return response()->json(['Succesfull',$DocenteAsigntura], 201);
     }
+    return response()->json('error', 500);
+}
 }
 
 

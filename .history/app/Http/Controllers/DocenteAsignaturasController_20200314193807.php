@@ -27,7 +27,7 @@ $docente=Docente::where('id',$request->id)->first();
 
      $test = DocenteAsignatura::distinct()
      ->with('docente')
-     ->get(['docente_id']);
+     ->get();
          return response()->json(['test1'=>$test],200);
      }
 

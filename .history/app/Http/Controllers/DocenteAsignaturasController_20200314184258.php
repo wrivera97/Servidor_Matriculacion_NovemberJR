@@ -20,14 +20,13 @@ $docente=Docente::where('id',$request->id)->first();
      }
      return response()->json('error',500);
     }
-
  //nextest
  public function gettest1(Request $request)
  {
 
-     $test = DocenteAsignatura::distinct()
+     $test = DocenteAsignatura::select('nombre1','apellido1')->distinct()
      ->with('docente')
-     ->get(['docente_id']);
+     ->get();
          return response()->json(['test1'=>$test],200);
      }
 

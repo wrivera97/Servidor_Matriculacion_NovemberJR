@@ -11,9 +11,9 @@ class DocenteAsignaturasController extends Controller
 {
     public function getDocenteAsignatura( Request $request){
 
-$docente=Docente::where('id',$request->id)->first();
+$docente=Docente::where('identificacion',$request->id)->first();
 
-    $docenteAsignaturas = DocenteAsignatura::where('docente_id',$docente->id)->where('periodo_lectivo_id',$request->periodo_lectivo_id)->with('asignatura') ->get();
+    $docenteAsignaturas = DocenteAsignatura::where('identificacion',$docente->id)->where('periodo_lectivo_id',$request->periodo_lectivo_id)->with('asignatura') ->get();
 
     if($docente){
      return response()->json(['asignacionesDocente' => $docenteAsignaturas], 200);
@@ -27,7 +27,7 @@ $docente=Docente::where('id',$request->id)->first();
 
      $test = DocenteAsignatura::distinct()
      ->with('docente')
-     ->get(['docente_id']);
+     ->get();
          return response()->json(['test1'=>$test],200);
      }
 

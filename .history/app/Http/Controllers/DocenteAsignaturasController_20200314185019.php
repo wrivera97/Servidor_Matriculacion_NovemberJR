@@ -25,7 +25,7 @@ $docente=Docente::where('id',$request->id)->first();
  public function gettest1(Request $request)
  {
 
-     $test = DocenteAsignatura::distinct()
+     $test = DocenteAsignatura::distinct('docente_asignaturas.docente_id')
      ->with('docente')
      ->get(['docente_id']);
          return response()->json(['test1'=>$test],200);

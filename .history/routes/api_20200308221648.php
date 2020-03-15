@@ -139,5 +139,5 @@ Route::post('/asignacionDocentes', 'DocenteAsignaturasController@AsignarDocentes
 Route::put('/asignacionDocentes', 'DocenteAsignaturasController@updateAsignaturaDocente');
 Route::delete('/asignacionDocentes', 'DocenteAsignaturasController@deleteAsignacionDocente');
 Route::get('/asignacionDocentestest', 'DocenteAsignaturasController@gettest');
-// test
 Route::get('/asignacionDocentestest1', 'DocenteAsignaturasController@gettest1');
+// test

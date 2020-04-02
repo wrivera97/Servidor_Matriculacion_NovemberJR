@@ -31,6 +31,16 @@ class MatriculasController extends Controller
         //
     }
 
+    
+    public function testasignaturas(Request $request  )
+    {
+       
+        $malla = Malla::where('carrera_id', $request->carrera_id)->first();
+        $asignaturas = Asignatura::where('malla_id', $malla->id)->get();
+        return response()->json(['asignaturas' => $asignaturas], 200);
+
+    }
+
     public function getCountMatriculas(Request $request)
     {
         $matriculadosCount = DB::select
@@ -704,6 +714,13 @@ where m.periodo_lectivo_id = " . $request->periodo_lectivo_id . "
         $asignaturas = Asignatura::where('malla_id', $malla->id)->with('periodo_academico')
             ->orderBy('periodo_academico_id')->get();
         return response()->json(['asignaturas' => $asignaturas], 200);
+    }
+
+    public function getAsignaturasCarreraNivel(Request $request){
+
+$asignaturas= Asignatura::join('mallas','mallas.id','=','asignaturas.malla_id')
+->where('carrera_id',$request->carrera_id)->where('periodo_academico_id',$request->periodo_academico_id)->get();
+return response()->json(['asignacionesDocente' => $asignaturas], 200);
     }
 
     public function updateMatricula(Request $request)

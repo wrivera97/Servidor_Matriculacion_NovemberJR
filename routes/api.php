@@ -138,6 +138,7 @@ Route::get('/asignacionDocentes', 'DocenteAsignaturasController@getDocenteAsigna
 Route::post('/asignacionDocentes', 'DocenteAsignaturasController@AsignarDocentesAsignaturas');
 Route::put('/asignacionDocentes', 'DocenteAsignaturasController@updateAsignaturaDocente');
 Route::delete('/asignacionDocentes', 'DocenteAsignaturasController@deleteAsignacionDocente');
-Route::get('/asignacionDocentestest', 'DocenteAsignaturasController@gettest');
-// test
-Route::get('/asignacionDocentestest1', 'DocenteAsignaturasController@gettest1');
+Route::get('/asignacionDocentesAsignados', 'DocenteAsignaturasController@getDocentesAsignados');
+
+//apitest
+route::get('/testnivel','MatriculasController@getAsignaturasCarreraNivel');

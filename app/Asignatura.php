@@ -27,4 +27,8 @@ class Asignatura extends Model implements Auditable
     {
         return $this->belongsTo('App\PeriodoAcademico');
     }
+    public function malla()
+    {
+        return $this->hasMany('App\Malla');
+    }
 }

@@ -3,6 +3,8 @@ use App\DocenteAsignatura;
 use App\Asignatura;
 use App\Docente;
 use App\PeriodoLectivo;
+use App\Carrera;
+use App\Malla;
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +28,15 @@ public function  asignatura(){
 
 public function  periodoLectivo(){
     return $this->belongsTo('App\PeriodoLectivo');
+}
+public function  carrera(){
+    return $this->belongsTo('App\Carrera');
+}
+public function  malla(){
+    return $this->belongsTo('App\Malla');
+}
+public function  periodo_academico(){
+    return $this->belongsTo('App\PeriodoAcademico');
 }
 
 }

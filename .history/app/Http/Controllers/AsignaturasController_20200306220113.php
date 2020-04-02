@@ -87,11 +87,4 @@ class AsignaturasController extends Controller
             'informacion_estudiante' => $informacionEstudiante
         ]);
     }
-    public function getaAsignaturaCarrera(Request $request){
-
-
-
-
-
-    }
 }

@@ -12,34 +12,33 @@ class DocenteAsignaturasController extends Controller
     public function getDocenteAsignatura( Request $request){
 
 $docente=Docente::where('id',$request->id)->first();
-
-    $docenteAsignaturas = DocenteAsignatura::where('docente_id',$docente->id)->where('periodo_lectivo_id',$request->periodo_lectivo_id)->with('asignatura') ->get();
+$docenteAsignaturas = DocenteAsignatura::where('docente_id',$docente->id)->where('periodo_lectivo_id',$request->periodo_lectivo_id)
+->with('asignatura')->orderby('id')->get();
 
     if($docente){
+
      return response()->json(['asignacionesDocente' => $docenteAsignaturas], 200);
      }
      return response()->json('error',500);
     }
-
- //nextest
- public function gettest1(Request $request)
+ public function getDocentesAsignados(Request $request)
  {
 
-     $test = DocenteAsignatura::distinct()
+     $DocenteAsignados = DocenteAsignatura::distinct()
      ->with('docente')
      ->get(['docente_id']);
-         return response()->json(['test1'=>$test],200);
+         return response()->json(['docentesAsignados'=>$DocenteAsignados],200);
      }
 
     public function AsignarDocentesAsignaturas(Request $request)
     {
     $data = $request->json()->all();
-    $dataDocenteAsignaturas = $data['docenteasignatura'];
-    $dataDocente = $data['docente'];
-    $dataPeriodo = $data['periodo'];
-    $dataAsignatura = $data['asignatura'];
+    $dataDocenteAsignaturas = $data['docente_asignatura'];
+    $dataDocente = $dataDocenteAsignaturas['docente'];
+    $dataPeriodoLectivo = $dataDocenteAsignaturas['periodo_lectivo'];
+    $dataAsignatura = $dataDocenteAsignaturas['asignatura'];
 
-    $dataAll=[$dataDocenteAsignaturas,$dataDocente,$dataPeriodo ,$dataAsignatura];
+    $dataAll=[$dataDocenteAsignaturas,$dataDocente,$dataPeriodoLectivo ,$dataAsignatura];
 
     $docenteasignaturas = new DocenteAsignatura([
     'paralelo' => $dataDocenteAsignaturas['paralelo'],
@@ -49,7 +48,7 @@ $docente=Docente::where('id',$request->id)->first();
        $docente = Docente::findOrFail($dataDocente['id']);
        $docenteasignaturas->docente()->associate($docente);
 
-       $periodolectivo = PeriodoLectivo::findOrFail($dataPeriodo['id']);
+       $periodolectivo = PeriodoLectivo::findOrFail($dataPeriodoLectivo['id']);
        $docenteasignaturas->periodoLectivo()->associate($periodolectivo);
 
        $asignatura = Asignatura::findOrFail($dataAsignatura['id']);
@@ -69,12 +68,12 @@ public function updateAsignaturaDocente(Request $request){
     try{
     DB::beginTransaction();
     $data=$request->json()->all();
-    $dataDocenteAsignaturas = $data['docenteasignatura'];
-    $dataDocente = $data['docente'];
-    $dataPeriodo = $data['periodo'];
-    $dataAsignatura = $data['asignatura'];
-
-    $dataAll=[$dataDocenteAsignaturas,$dataDocente,$dataPeriodo ,$dataAsignatura];
+    $dataDocenteAsignaturas = $data['docente_asignatura'];
+    //$dataDocente = $dataDocenteAsignaturas['docente_id'];
+    //$dataPeriodoLectivo = $data['periodo_lectivo'];
+    // $dataAsignatura = $dataDocenteAsignaturas['asignatura'];
+    // these variables make an update error
+    //$dataAll=[$dataDocenteAsignaturas,$dataDocente,$dataPeriodo ,$dataAsignatura];
 
     $docenteAsignatura = DocenteAsignatura::findOrFail($dataDocenteAsignaturas['id']);
 
@@ -83,22 +82,22 @@ public function updateAsignaturaDocente(Request $request){
     'paralelo' => $dataDocenteAsignaturas['paralelo'],
      'jornada' => $dataDocenteAsignaturas['jornada']
     ]);
-    $docente = Docente::findOrFail($dataDocente['id']);
+    $docente = Docente::findOrFail($dataDocenteAsignaturas['docente_id']);
     $docenteAsignatura->docente()->associate($docente);
 
-    $periodolectivo = PeriodoLectivo::findOrFail($dataPeriodo['id']);
-    $docenteAsignatura->periodoLectivo()->associate($periodolectivo);
+    $periodolectivo = PeriodoLectivo::findOrFail($dataDocenteAsignaturas['periodo_lectivo_id']);
+  $docenteAsignatura->periodoLectivo()->associate($periodolectivo);
 
-    $asignatura = Asignatura::findOrFail($dataAsignatura['id']);
+    $asignatura = Asignatura::findOrFail($dataDocenteAsignaturas['asignatura']['id']);
     $docenteAsignatura->asignatura()->associate($asignatura);
 
     $docenteAsignatura->save();
 
 DB::commit();
 
-if($dataAll){
+if($docenteAsignatura){
 
-    return response()->json(['succesfull'=>$dataAll],200);
+    return response()->json(['succesfull'=>$docenteAsignatura],200);
 
 }
 

@@ -129,16 +129,24 @@ Route::get('/prueba', 'PruebasController@a')->middleware('auth:api');
 
 //API DOCENTES
 
-Route::get('/docentes', 'DocentesController@listD');
-Route::post('/docentes', 'DocentesController@createD');
-Route::put('/docentes', 'DocentesController@updateD');
-Route::delete('/docentes', 'DocentesController@deleteD');
-//API ASIGNACION_DOCENTES
+Route::get('/detalleDocentes', 'DocentesController@getDocentesAsignados');
+
+Route::get('/testcarreras','AsignaturasController@getCarreraDocenteAsignatura');
+//Route::post('/docentes', 'DocentesController@createD');
+//Route::put('/docentes', 'DocentesController@updateD');
+//Route::delete('/docentes', 'DocentesController@deleteD');
+                //API ASIGNACION_DOCENTES
 Route::get('/asignacionDocentes', 'DocenteAsignaturasController@getDocenteAsignatura');
 Route::post('/asignacionDocentes', 'DocenteAsignaturasController@AsignarDocentesAsignaturas');
 Route::put('/asignacionDocentes', 'DocenteAsignaturasController@updateAsignaturaDocente');
 Route::delete('/asignacionDocentes', 'DocenteAsignaturasController@deleteAsignacionDocente');
-Route::get('/asignacionDocentesAsignados', 'DocenteAsignaturasController@getDocentesAsignados');
+
+                    //API NOTAS
+//Route::post('','');
+//Route::put('','');
+//Route::delete('','');
 
 //apitest
-route::get('/testnivel','MatriculasController@getAsignaturasCarreraNivel');
+//route::get('/testnivel','MatriculasController@getAsignaturasCarreraNivel');
+Route::get('/testnotas','DocenteAsignaturasController@test');
+Route::get('/testnotas1','DetalleNotasController@getDetalleEstudiantes');

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Notifications\ResetePasswordNotification;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -57,5 +58,9 @@ class User extends Authenticatable //implements Auditable
 
     public function sendPasswordResetNotification($token){
         $this->notify(new ResetePasswordNotification($token));
+    }
+    public function docente()
+    {
+    return $this->hasOne('App\Docente');
     }
 }

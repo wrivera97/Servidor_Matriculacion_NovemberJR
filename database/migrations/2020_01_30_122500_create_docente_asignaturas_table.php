@@ -27,6 +27,7 @@ class CreateDocenteAsignaturasTable extends Migration
 
                     $table->String('paralelo')->nullable();
                     $table->String('jornada')->nullable();
+                    $table->String('estado',50)->default('ACTIVO');
                 });
             }
     /**

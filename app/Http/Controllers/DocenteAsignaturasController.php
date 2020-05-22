@@ -5,30 +5,41 @@ use App\DocenteAsignatura;
 use App\PeriodoLectivo;
 use App\Docente;
 use App\Asignatura;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class DocenteAsignaturasController extends Controller
 {
-    public function getDocenteAsignatura( Request $request){
+   public function getDocenteAsignatura( Request $request){
 
 $docente=Docente::where('id',$request->id)->first();
 $docenteAsignaturas = DocenteAsignatura::where('docente_id',$docente->id)->where('periodo_lectivo_id',$request->periodo_lectivo_id)
 ->with('asignatura')->orderby('id')->get();
 
-    if($docente){
 
+    if($docente){
      return response()->json(['asignacionesDocente' => $docenteAsignaturas], 200);
      }
      return response()->json('error',500);
     }
- public function getDocentesAsignados(Request $request)
- {
 
-     $DocenteAsignados = DocenteAsignatura::distinct()
-     ->with('docente')
-     ->get(['docente_id']);
-         return response()->json(['docentesAsignados'=>$DocenteAsignados],200);
-     }
+
+    public function test(Request $request)
+    {
+        $test=User::where('id',$request->id)->first();
+        $docente=Docente::where('user_id',$test->id)->first();
+        $docenteasignatura=DocenteAsignatura::where('docente_id',$docente->id)->where('periodo_lectivo_id',$request->periodo_lectivo_id)
+        ->where('estado','ACTIVO')
+        ->with('asignatura')->orderby('id')->get();
+        
+
+        if ($test) {
+            return response()->json(['ok'=>$docenteasignatura],200);
+        }
+        return response()->json('error',500);
+    
+    }
+
 
     public function AsignarDocentesAsignaturas(Request $request)
     {
@@ -42,7 +53,8 @@ $docenteAsignaturas = DocenteAsignatura::where('docente_id',$docente->id)->where
 
     $docenteasignaturas = new DocenteAsignatura([
     'paralelo' => $dataDocenteAsignaturas['paralelo'],
-     'jornada' => $dataDocenteAsignaturas['jornada']
+     'jornada' => $dataDocenteAsignaturas['jornada'],
+     'estado'=>$dataDocenteAsignaturas['estado']
     ]);
 
        $docente = Docente::findOrFail($dataDocente['id']);
@@ -111,16 +123,15 @@ if($docenteAsignatura){
 
 }
   public function deleteAsignacionDocente( Request $request){
-
     DB::beginTransaction();
-    $DocenteAsigntura = DocenteAsignatura::findOrFail($request->id)
-    ->delete();
+    $DocenteAsigntura = DocenteAsignatura::findOrFail($request->id);
+    $DocenteAsigntura->update(['estado'=> 'ANULADO']);
     DB::commit();
-    if($DocenteAsigntura){
     return response()->json(['Succesfull',$DocenteAsigntura], 201);
-    }
-    return response()->json('error', 500);
+    
 }
+
+
 
 }
 

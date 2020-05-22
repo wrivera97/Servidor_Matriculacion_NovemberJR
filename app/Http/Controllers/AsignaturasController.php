@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Asignatura;
+use App\Docente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,6 +25,25 @@ class AsignaturasController extends Controller
         return response()->json(['asignaturas' => $asignaturas], 200);
     }
 
+
+
+     public function getCarreraDocenteAsignatura(Request $request)
+{ 
+  $docente= Docente::where('id',$request->id)->first();
+
+      $asignaturas=db::select('select c.descripcion, c.id from docentes d
+      join docente_asignaturas da on d.id = da.docente_id
+      join asignaturas a on da.asignatura_id = a.id
+      join mallas m on a.malla_id = m.id
+      join carreras c on m.carrera_id = c.id
+      where d.id= :id',['id'=>$docente->id]);
+      
+      return response()->json(['exito'=>$asignaturas,200]);
+    }
+
+ 
+ 
+ 
     public function getOne(Request $request)
     {
         //$data = $request->json()->all();

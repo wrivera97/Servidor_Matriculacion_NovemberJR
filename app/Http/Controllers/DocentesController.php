@@ -12,18 +12,12 @@ class DocentesController extends Controller
         //
     }
 
-    // function obtener datos all
-    public function listD(Request $request)
+    // function obtener datos docentes
+    public function getDocentesAsignados ()
     {
-        $data = $request->json()->all();
-        $dataDocente = $data['docente'];
-        $docente = Docente::findOrFail($dataDocente['id']);
-
-        if ($docente) {
-            return response()->json(['docente' => $docente], 200);
-        }
-        return response()->json(['error' => $docente], 500);
-    }
+           $data=Docente:: select('nombre1','nombre2','apellido1','apellido2','identificacion','correo_institucional','id')->get();
+  return response()->json(['detalleDocentes'=>$data],200);
+       }
 
 //function insertar datos
     public function createD(Request $request)

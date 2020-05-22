@@ -38,7 +38,7 @@ class CreateDocentesTable extends Migration
             $table->string('direccion',200);
             $table->string('etnia',50);
             //$table->string('pueblo_nacionalidad',50);
-            $table->string('estado',50)->default("ACTIVO");
+            $table->string('estado',50)->default('ACTIVO');
 
 
         });

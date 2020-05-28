@@ -15,7 +15,7 @@ class DocentesController extends Controller
     // function obtener datos docentes
     public function getDocentesAsignados ()
     {
-           $data=Docente:: select('nombre1','nombre2','apellido1','apellido2','identificacion','correo_institucional','id')->get();
+           $data=Docente:: select('nombre1','nombre2','apellido1','apellido2','identificacion','correo_institucional','id','estado')->get();
   return response()->json(['detalleDocentes'=>$data],200);
        }
 

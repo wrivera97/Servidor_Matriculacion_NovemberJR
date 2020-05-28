@@ -13,12 +13,11 @@ class DetalleNotasController extends Controller
   public function getDetalleEstudiantes(Request $request)
   {
 
-    $estudiantesdetalle=DetalleMatricula::distinct()->select('*')
-    ->join('matriculas','matriculas.id','detalle_matriculas.matricula_id')
-    ->join('estudiantes','estudiantes.id','matriculas.estudiante_id')
-    ->where('asignatura_id',$request->asignatura_id)
-    ->where('detalle_matriculas.paralelo',$request->paralelo)->where('detalle_matriculas.jornada',$request->jornada)
-    ->get(['id']);
+      $estudiantesdetalle= DetalleMatricula:: distinct()->select('estudiante_id')
+          ->join('matriculas','matriculas.id','detalle_matriculas.matricula_id')
+          ->where('detalle_matriculas.asignatura_id',$request->asignatura_id)
+          ->where('detalle_matriculas.paralelo',$request->paralelo)
+          ->where('detalle_matriculas.jornada',$request->jornada) ->with('estudiante')->orderby('estudiante_id')->get();
 
 
 return response()->json(['ok'=>$estudiantesdetalle],200);{

@@ -10,18 +10,17 @@ protected $fillable=[
     'nota1',
     'nota2',
     'nota_final',
-    
     'asistencia1',
     'asistencia2',
-    'asistencia_total'
+    'asistencia_final',
+    'estado_academico'
 ];
 public function docente_asignatura(){
 return $this->belongsTo('App\DocenteAsignatura');
 
 }
-public function estudiante() {
-    return $this->belongsTo('App\Estudiante');
-
+public function detalle_matricula(){
+    return $this->belongsTo('App\DetalleMatricula');
 }
 
 }

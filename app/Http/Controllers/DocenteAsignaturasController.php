@@ -31,13 +31,13 @@ $docenteAsignaturas = DocenteAsignatura::where('docente_id',$docente->id)->where
         $docenteasignatura=DocenteAsignatura::where('docente_id',$docente->id)->where('periodo_lectivo_id',$request->periodo_lectivo_id)
         ->where('estado','ACTIVO')
         ->with('asignatura')->orderby('id')->get();
-        
+
 
         if ($test) {
             return response()->json(['ok'=>$docenteasignatura],200);
         }
         return response()->json('error',500);
-    
+
     }
 
 
@@ -128,7 +128,7 @@ if($docenteAsignatura){
     $DocenteAsigntura->update(['estado'=> 'ANULADO']);
     DB::commit();
     return response()->json(['Succesfull',$DocenteAsigntura], 201);
-    
+
 }
 
 

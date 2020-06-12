@@ -19,8 +19,8 @@ public function docente_asignatura(){
 return $this->belongsTo('App\DocenteAsignatura');
 
 }
-public function detalle_matricula(){
-    return $this->belongsTo('App\DetalleMatricula');
+public function estudiante(){
+    return $this->belongsTo('App\Estudiante');
 }
 
 }

@@ -26,14 +26,14 @@ $docenteAsignaturas = DocenteAsignatura::where('docente_id',$docente->id)->where
 
     public function test(Request $request)
     {
-        $test=User::where('id',$request->id)->first();
-        $docente=Docente::where('user_id',$test->id)->first();
+        $user=User::where('id',$request->id)->first();
+        $docente=Docente::where('user_id',$user->id)->first();
         $docenteasignatura=DocenteAsignatura::where('docente_id',$docente->id)->where('periodo_lectivo_id',$request->periodo_lectivo_id)
         ->where('estado','ACTIVO')
         ->with('asignatura')->orderby('id')->get();
 
 
-        if ($test) {
+        if ($user) {
             return response()->json(['ok'=>$docenteasignatura],200);
         }
         return response()->json('error',500);

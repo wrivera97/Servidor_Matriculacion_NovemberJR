@@ -6,6 +6,8 @@ use App\DetalleMatricula;
 use App\DetalleNota;
 use App\DocenteAsignatura;
 use App\Estudiante;
+use App\Matricula;
+use App\User;
 use Illuminate\Http\Request;
 
 
@@ -21,7 +23,8 @@ class DetalleNotasController extends Controller
           ->where('detalle_matriculas.estado','MATRICULADO')
           ->where('detalle_matriculas.asignatura_id',$request->asignatura_id)
           ->where('detalle_matriculas.paralelo',$request->paralelo)
-          ->where('detalle_matriculas.jornada',$request->jornada)->with('estudiante')->orderby('estudiante_id')->get();
+          ->where('detalle_matriculas.jornada',$request->jornada)
+          ->where('matriculas.periodo_lectivo_id',$request->periodo_lectivo_id)->with('estudiante')->orderby('estudiante_id')->get();
     return response()->json(['detalle_estudiante'=>$estudiantesdetalle],200);
 
 }
@@ -66,6 +69,15 @@ class DetalleNotasController extends Controller
         return response()->json(['ok'=>$detalleNota],200);
     }
 
+
+    public function getDetalleAsignaturaEstudianteUser ( Request $request)
+    {
+        $user=User::where('id',$request->id)->first();
+        $estudiante= Estudiante::where('user_id',$user->id)->first();
+        $matricula=Matricula::where('estudiante_id',$estudiante->id)->first();
+        $detalle_matricula=DetalleMatricula::where('matricula_id',$matricula->id)->with('asignatura')->get();
+return response()->json(['ok'=>$detalle_matricula],200);
+    }
 
 
 }

@@ -87,6 +87,6 @@ class DetalleNotasController extends Controller
         }
     }
     
-//esto esta funcionando
+    public function testpull(){}
 
 }

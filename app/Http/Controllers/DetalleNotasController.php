@@ -86,6 +86,7 @@ class DetalleNotasController extends Controller
             return response()->json('error',500);
         }
     }
-
+    
+//esto esta funcionando
 
 }

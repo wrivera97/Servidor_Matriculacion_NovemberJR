@@ -148,5 +148,6 @@ Route::post('/notaDetalle','DetalleNotasController@createDetalleNotas');
 Route::get('/testnotas','DocenteAsignaturasController@test');
 Route::get('/testnotas1','DetalleNotasController@getDetalleEstudiantes');
 Route::get('/testnotas2','DetalleNotasController@getDetalleAsignaturaEstudianteUser');
+Route::get('/testnotas3','DetalleNotasController@getdetalleNota');
 
 

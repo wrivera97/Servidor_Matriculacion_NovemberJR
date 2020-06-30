@@ -126,28 +126,23 @@ Route::post('/matriculas/open_periodo_lectivo', 'MatriculasController@openPeriod
 
 Route::get('/prueba', 'PruebasController@a')->middleware('auth:api');
 
-
-//API DOCENTES
 Route::get('/detalleDocentes', 'DocentesController@getDocentesAsignados');
-Route::get('/testcarreras','AsignaturasController@getCarreraDocenteAsignatura');
-//Route::post('/docentes', 'DocentesController@createD');
-//Route::put('/docentes', 'DocentesController@updateD');
-//Route::delete('/docentes', 'DocentesController@deleteD');
-//API ASIGNACION_DOCENTES
+
 Route::get('/asignacionDocentes', 'DocenteAsignaturasController@getDocenteAsignatura');
 Route::post('/asignacionDocentes', 'DocenteAsignaturasController@AsignarDocentesAsignaturas');
 Route::put('/asignacionDocentes', 'DocenteAsignaturasController@updateAsignaturaDocente');
 Route::delete('/asignacionDocentes', 'DocenteAsignaturasController@deleteAsignacionDocente');
-//API NOTAS
+Route::get('/docenteAsignaturas/Docente','DocenteAsignaturasController@getAsignaturaDocente');
+Route::get('/docenteAsignatura/Docente/Estudiante','DetalleNotasController@getDetalleEstudiantes');
+
 Route::get('/notaDetalle','DetalleNotasController@getdetalleNotas');
+Route::get('/notaDetalle/Estudiante','DetalleNotasController@getdetalleNota');
+Route::get('/notaDetalle/User/Estudiante','DetalleNotasController@getDetalleAsignaturaEstudianteUser');
 Route::post('/notaDetalle','DetalleNotasController@createDetalleNotas');
-//Route::put('','');
-//Route::delete('','');
 //apitest
 //route::get('/testnivel','MatriculasController@getAsignaturasCarreraNivel');
-Route::get('/testnotas','DocenteAsignaturasController@test');
-Route::get('/testnotas1','DetalleNotasController@getDetalleEstudiantes');
-Route::get('/testnotas2','DetalleNotasController@getDetalleAsignaturaEstudianteUser');
-Route::get('/testnotas3','DetalleNotasController@getdetalleNota');
+
+
+
 
 

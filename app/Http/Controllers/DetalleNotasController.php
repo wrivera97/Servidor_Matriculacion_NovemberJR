@@ -54,7 +54,7 @@ class DetalleNotasController extends Controller
         $detalleNota->save();
 
         if($detalleNota==true){
-        return response()->json(['ok'=>$detalleNota],201);
+        return response()->json(['success'=>$detalleNota],201);
         }else{
         return  response()->json('error',500);
         }
@@ -68,7 +68,7 @@ class DetalleNotasController extends Controller
         $detalle_matricula = DetalleMatricula::where('matricula_id', $matricula->id)->with('asignatura')->get();
 
         if ($user ==true) {
-        return response()->json(['ok' => $detalle_matricula], 200);
+        return response()->json(['asignatura_estudiante' => $detalle_matricula], 200);
         } else{
             return response()->json('error',500);
         }

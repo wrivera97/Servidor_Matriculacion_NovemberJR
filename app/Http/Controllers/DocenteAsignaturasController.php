@@ -24,7 +24,7 @@ $docenteAsignaturas = DocenteAsignatura::where('docente_id',$docente->id)->where
     }
 
 
-    public function test(Request $request)
+    public function getAsignaturaDocente(Request $request)
     {
         $user=User::where('id',$request->id)->first();
         $docente=Docente::where('user_id',$user->id)->first();
@@ -34,7 +34,7 @@ $docenteAsignaturas = DocenteAsignatura::where('docente_id',$docente->id)->where
 
 
         if ($user) {
-            return response()->json(['ok'=>$docenteasignatura],200);
+            return response()->json(['docente_asignaturas'=>$docenteasignatura],200);
         }
         return response()->json('error',500);
 
@@ -81,12 +81,6 @@ public function updateAsignaturaDocente(Request $request){
     DB::beginTransaction();
     $data=$request->json()->all();
     $dataDocenteAsignaturas = $data['docente_asignatura'];
-    //$dataDocente = $dataDocenteAsignaturas['docente_id'];
-    //$dataPeriodoLectivo = $data['periodo_lectivo'];
-    // $dataAsignatura = $dataDocenteAsignaturas['asignatura'];
-    // these variables make an update error
-    //$dataAll=[$dataDocenteAsignaturas,$dataDocente,$dataPeriodo ,$dataAsignatura];
-
     $docenteAsignatura = DocenteAsignatura::findOrFail($dataDocenteAsignaturas['id']);
 
     $docenteAsignatura->update([

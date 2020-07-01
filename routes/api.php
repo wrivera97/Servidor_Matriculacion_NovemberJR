@@ -136,10 +136,12 @@ Route::get('/docenteAsignaturas/Docente','DocenteAsignaturasController@getAsigna
 Route::get('/docenteAsignatura/Docente/Estudiante','DetalleNotasController@getDetalleEstudiantes');
 
 Route::get('/notaDetalle','DetalleNotasController@getdetalleNotas');
+Route::get('/notaDetalle/Docente','DetalleNotasController@getdetalleNotaDocente');
 Route::get('/notaDetalle/Estudiante','DetalleNotasController@getdetalleNota');
 Route::get('/notaDetalle/User/Estudiante','DetalleNotasController@getDetalleAsignaturaEstudianteUser');
 Route::post('/notaDetalle','DetalleNotasController@createDetalleNotas');
 Route::put('/notaDetalle','DetalleNotasController@updateDetalleNotas');
+
 
 //apitest
 //route::get('/testnivel','MatriculasController@getAsignaturasCarreraNivel');

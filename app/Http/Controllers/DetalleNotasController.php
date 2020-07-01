@@ -126,4 +126,12 @@ class DetalleNotasController extends Controller
         }
     }
 
+
+    public function getdetalleNotaDocente(Request $request){
+
+      $detalleNota=DetalleNota::where('estudiante_id',$request->estudiante_id)
+          ->where('docente_asignatura_id',$request->docente_asignatura_id)->first();
+             return response()->json(['detalle_nota'=>$detalleNota],200);
+    }
+
 }

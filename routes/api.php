@@ -139,6 +139,8 @@ Route::get('/notaDetalle','DetalleNotasController@getdetalleNotas');
 Route::get('/notaDetalle/Estudiante','DetalleNotasController@getdetalleNota');
 Route::get('/notaDetalle/User/Estudiante','DetalleNotasController@getDetalleAsignaturaEstudianteUser');
 Route::post('/notaDetalle','DetalleNotasController@createDetalleNotas');
+Route::put('/notaDetalle','DetalleNotasController@updateDetalleNotas');
+
 //apitest
 //route::get('/testnivel','MatriculasController@getAsignaturasCarreraNivel');
 

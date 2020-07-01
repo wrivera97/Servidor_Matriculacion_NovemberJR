@@ -8,8 +8,10 @@ use App\DocenteAsignatura;
 use App\Estudiante;
 use App\Matricula;
 use App\User;
+use Dompdf\Exception;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class DetalleNotasController extends Controller
@@ -25,7 +27,7 @@ class DetalleNotasController extends Controller
           ->where('matriculas.periodo_lectivo_id', $request->periodo_lectivo_id)->with('estudiante')->orderby('estudiante_id')->get();
       if($estudiantesdetalle==true) {
           return response()->json(['detalle_estudiante' => $estudiantesdetalle], 200);
-      }else{
+      } else {
           return  response()->json('error',500);
       }
   }
@@ -54,10 +56,47 @@ class DetalleNotasController extends Controller
         $detalleNota->save();
 
         if($detalleNota==true){
+
         return response()->json(['success'=>$detalleNota],201);
-        }else{
+        } else {
         return  response()->json('error',500);
         }
+    }
+
+    public function updateDetalleNotas(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $data =$request->json()->all();
+            $dataDetalleNotas = $data['detalle_nota'];
+            $detalleNota = DetalleNota::findOrFail($dataDetalleNotas['id']);
+            $detalleNota->update([
+                'nota1' => $dataDetalleNotas  ['nota1'],
+                'nota2' => $dataDetalleNotas  ['nota2'],
+                'nota_final' => $dataDetalleNotas  ['nota_final'],
+                'asistencia1' => $dataDetalleNotas  ['asistencia1'],
+                'asistencia2' => $dataDetalleNotas  ['asistencia2'],
+                'asistencia_final' => $dataDetalleNotas  ['asistencia_final'],
+                'estado_academico' => $dataDetalleNotas  ['estado_academico']
+            ]);
+            $docenteAsignatura = DocenteAsignatura::findOrFail($dataDetalleNotas['docente_asignatura_id']);
+            $detalleNota->docente_asignatura()->associate($docenteAsignatura);
+
+            $estudiante = Estudiante::findOrFail($dataDetalleNotas['estudiante_id']);
+            $detalleNota->estudiante()->associate($estudiante);
+            $detalleNota->save();
+
+            DB::commit();
+            if ($detalleNota){
+
+            return response()->json(['success' => $detalleNota], 201);
+                } else {
+                return response()->json('error',500) ;
+            }
+        }
+        catch(Exception $e) {
+                return response()->json($e, 500);
+            }
     }
 
     public function getDetalleAsignaturaEstudianteUser ( Request $request)
@@ -69,7 +108,7 @@ class DetalleNotasController extends Controller
 
         if ($user ==true) {
         return response()->json(['asignatura_estudiante' => $detalle_matricula], 200);
-        } else{
+        } else {
             return response()->json('error',500);
         }
     }
@@ -86,7 +125,5 @@ class DetalleNotasController extends Controller
             return response()->json('error',500);
         }
     }
-    
-    public function testpull(){}
 
 }

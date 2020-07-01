@@ -29,7 +29,8 @@ class CreateDetalleNotasTable extends Migration
             $table->decimal('asistencia1',5,2)->nullable();
             $table->decimal('asistencia2',5,2)->nullable();
             $table->decimal('asistencia_final',5,2)->nullable();
-            $table->string('estado_academico',20)->default('PENDIENTE')->nullable();
+            $table->string('estado_academico',20)->nullable();
+            $table->unique(['estudiante_id','docente_asignatura_id']);
         });
     }
 

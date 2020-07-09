@@ -25,22 +25,20 @@ class CreateDocentesTable extends Migration
 
             $table->string('nombre1');
             $table->string('nombre2');
-            $table->string('apellido1',50);
-            $table->string('apellido2',50);
-            $table->string('tipo_identificacion',40);
-            $table->string('identificacion',50);
-            $table->string('genero',50);
+            $table->string('apellido1', 50);
+            $table->string('apellido2', 50);
+            $table->string('tipo_identificacion', 40);
+            $table->string('identificacion', 50);
+            $table->string('genero', 50);
             $table->date('fecha_nacimiento')->nullable();
-            $table->string('correo_personal',100)->nullable();
-            $table->string('correo_institucional',100)->nullable();
+            $table->string('correo_personal', 100)->nullable();
+            $table->string('correo_institucional', 100)->nullable();
             //$table->string('discapacidad',50)->default("NO");
             $table->string('tipo_sangre', 50)->nullable();
-            $table->string('direccion',200);
-            $table->string('etnia',50);
+            $table->string('direccion', 200);
+            $table->string('etnia', 50);
             //$table->string('pueblo_nacionalidad',50);
-            $table->string('estado',50)->default('ACTIVO');
-
-
+            $table->string('estado', 50)->default('ACTIVO');
         });
     }
 

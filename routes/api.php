@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -132,21 +133,14 @@ Route::get('/asignacionDocentes', 'DocenteAsignaturasController@getDocenteAsigna
 Route::post('/asignacionDocentes', 'DocenteAsignaturasController@AsignarDocentesAsignaturas');
 Route::put('/asignacionDocentes', 'DocenteAsignaturasController@updateAsignaturaDocente');
 Route::delete('/asignacionDocentes', 'DocenteAsignaturasController@deleteAsignacionDocente');
-Route::get('/docenteAsignaturas/Docente','DocenteAsignaturasController@getAsignaturaDocente');
-Route::get('/docenteAsignatura/Docente/Estudiante','DetalleNotasController@getDetalleEstudiantes');
+Route::get('/docenteAsignaturas/Docente', 'DocenteAsignaturasController@getAsignaturaDocente');
+Route::get('/docenteAsignatura/Docente/Estudiante', 'DetalleNotasController@getDetalleEstudiantes');
 
-Route::get('/notaDetalle','DetalleNotasController@getdetalleNotas');
-Route::get('/notaDetalle/Docente','DetalleNotasController@getdetalleNotaDocente');
-Route::get('/notaDetalle/Estudiante','DetalleNotasController@getdetalleNota');
-Route::get('/notaDetalle/User/Estudiante','DetalleNotasController@getDetalleAsignaturaEstudianteUser');
-Route::post('/notaDetalle','DetalleNotasController@createDetalleNotas');
-Route::put('/notaDetalle','DetalleNotasController@updateDetalleNotas');
-
-
+Route::get('/notaDetalle', 'DetalleNotasController@getdetalleNotas');
+Route::get('/notaDetalle/Docente', 'DetalleNotasController@getdetalleNotaDocente');
+Route::get('/notaDetalle/Estudiante', 'DetalleNotasController@getdetalleNota');
+Route::get('/notaDetalle/User/Estudiante', 'DetalleNotasController@getDetalleAsignaturaEstudianteUser');
+Route::post('/notaDetalle', 'DetalleNotasController@createDetalleNotas');
+Route::put('/notaDetalle', 'DetalleNotasController@updateDetalleNotas');
 //apitest
 //route::get('/testnivel','MatriculasController@getAsignaturasCarreraNivel');
-
-
-
-
-

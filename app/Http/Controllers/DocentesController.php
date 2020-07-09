@@ -13,13 +13,22 @@ class DocentesController extends Controller
     }
 
     // function obtener datos docentes
-    public function getDocentesAsignados ()
+    public function getDocentesAsignados()
     {
-           $data=Docente:: select('nombre1','nombre2','apellido1','apellido2','identificacion','correo_institucional','id','estado')->get();
-  return response()->json(['detalleDocentes'=>$data],200);
-       }
+        $data = Docente::select(
+            'nombre1',
+            'nombre2',
+            'apellido1',
+            'apellido2',
+            'identificacion',
+            'correo_institucional',
+            'id',
+            'estado'
+        )->orderby('apellido1')->get();
+        return response()->json(['detalleDocentes' => $data], 200);
+    }
 
-//function insertar datos
+    //function insertar datos
     public function createD(Request $request)
     {
         $data = $request->json()->all();
@@ -45,11 +54,11 @@ class DocentesController extends Controller
             'estado' => $dataDocente['estado'],
         ]);
         if ($docente) {
-            return response()->json(['docente'=> $docente], 201);
+            return response()->json(['docente' => $docente], 201);
         }
         return response()->json(['error' => $docente], 500);
     }
-//     function modificar
+    //     function modificar
     public function updateD(Request $request)
     {
         $data = $request->json()->all();
@@ -80,22 +89,17 @@ class DocentesController extends Controller
             return response()->json(['docente' => $docente], 201);
         }
         return response()->json(['error' => $docente], 500);
-
     }
 
     //function eliminarLogico
 
-    public function deleteD(Request $request){
+    public function deleteD(Request $request)
+    {
         $docente = Docente::findOrFail($request->docente_id);
         $docente->update(['estado' => false]);
         if ($docente) {
             return response()->json(['docente' => $docente], 201);
         }
         return response()->json(['error' => $docente], 500);
-
     }
-
-
-
-
 }

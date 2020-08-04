@@ -24,6 +24,7 @@ class DocentesController extends Controller
             'correo_institucional',
             'id',
             'estado'
+
         )->orderby('apellido1')->get();
         return response()->json(['detalleDocentes' => $data], 200);
     }

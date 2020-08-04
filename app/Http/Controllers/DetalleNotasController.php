@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\DetalleMatricula;
 use App\DetalleNota;
 use App\DocenteAsignatura;
@@ -9,7 +7,6 @@ use App\Estudiante;
 use App\Matricula;
 use App\User;
 use Dompdf\Exception;
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -117,11 +114,10 @@ class DetalleNotasController extends Controller
         $estudiante = Estudiante::where('user_id', $user->id)->first();
         $docenteAsignatura = DocenteAsignatura::where('asignatura_id', $request->asignatura_id)->where('periodo_lectivo_id', $request->periodo_lectivo_id)->first();
         $detalleNota = DetalleNota::where('docente_asignatura_id', $docenteAsignatura->id)->where('estudiante_id', $estudiante->id)->first();
-
-        if ($user) {
-            return response()->json(['detalleNota' => $detalleNota], 200);
+        if ($detalleNota==null) {
+            return response()->json('error', 404);
         } else {
-            return response()->json('error', 500);
+            return response()->json(['detalleNota' => $detalleNota], 200);
         }
     }
 
@@ -133,7 +129,7 @@ class DetalleNotasController extends Controller
         if ($detalleNota) {
             return response()->json(['detalle_nota' => $detalleNota], 200);
         } else {
-            return 'error';
+            return response()->json('error', 500);
         }
     }
 }

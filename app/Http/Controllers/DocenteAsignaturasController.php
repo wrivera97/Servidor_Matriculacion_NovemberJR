@@ -14,7 +14,7 @@ class DocenteAsignaturasController extends Controller
     public function getDocenteAsignatura(Request $request)
     {
         $docente = Docente::where('id', $request->id)->first();/*buscamos el id docente y seleccionamos el primer registro encontrado*/
-        $docenteAsignaturas = DocenteAsignatura::select('docente_asignaturas.*', 'carreras.descripcion','carreras.id')/*hacemos una consulta sql con ORM*/
+        $docenteAsignaturas = DocenteAsignatura::select('docente_asignaturas.*','carreras.descripcion')/*hacemos una consulta sql con ORM*/
             ->join('asignaturas', 'asignaturas.id', 'docente_asignaturas.asignatura_id')/*unimos las tablas de la consulta*/
             ->join('mallas', 'mallas.id', 'asignaturas.malla_id')
             ->join('carreras', 'carreras.id', 'mallas.carrera_id')

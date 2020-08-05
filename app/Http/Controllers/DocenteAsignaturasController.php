@@ -14,7 +14,7 @@ class DocenteAsignaturasController extends Controller
     public function getDocenteAsignatura(Request $request)
     {
         $docente = Docente::where('id', $request->id)->first();/*buscamos el id docente y seleccionamos el primer registro encontrado*/
-        $docenteAsignaturas = DocenteAsignatura::select('docente_asignaturas.*', 'carreras.descripcion')/*hacemos una consulta sql con ORM*/
+        $docenteAsignaturas = DocenteAsignatura::select('docente_asignaturas.*', 'carreras.descripcion','carreras.id')/*hacemos una consulta sql con ORM*/
             ->join('asignaturas', 'asignaturas.id', 'docente_asignaturas.asignatura_id')/*unimos las tablas de la consulta*/
             ->join('mallas', 'mallas.id', 'asignaturas.malla_id')
             ->join('carreras', 'carreras.id', 'mallas.carrera_id')
@@ -50,13 +50,13 @@ class DocenteAsignaturasController extends Controller
         $data = $request->json()->all();
         $dataDocenteAsignaturas = $data['docente_asignatura'];/*este es el nombre del objeto principal el cual enviaremos todos los datos*/
         $dataDocente = $dataDocenteAsignaturas['docente']; /*obtenemos el id del docente seleccionado desde frontend*/
-        $dataPeriodoLectivo = $dataDocenteAsignaturas['periodo_lectivo'];/*obtenemos el id del periodo lectivo seleccionado desde frontend*/ 
+        $dataPeriodoLectivo = $dataDocenteAsignaturas['periodo_lectivo'];/*obtenemos el id del periodo lectivo seleccionado desde frontend*/
         $dataAsignatura = $dataDocenteAsignaturas['asignatura'];/*obtenemos el id de la asignatura seleccionada desde frontend*/
 
         $dataAll = [$dataDocenteAsignaturas, $dataDocente, $dataPeriodoLectivo, $dataAsignatura];
 
         $docenteasignaturas = new DocenteAsignatura([/*llamos al modelo y pasamos los siguientes datos "paralelo,jornada,estado"*/
-            'paralelo' => $dataDocenteAsignaturas['paralelo'], 
+            'paralelo' => $dataDocenteAsignaturas['paralelo'],
             'jornada' => $dataDocenteAsignaturas['jornada'],
             'estado' => $dataDocenteAsignaturas['estado']
         ]);

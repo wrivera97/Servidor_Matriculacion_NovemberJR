@@ -114,10 +114,11 @@ class DetalleNotasController extends Controller
         $estudiante = Estudiante::where('user_id', $user->id)->first();
         $docenteAsignatura = DocenteAsignatura::where('asignatura_id', $request->asignatura_id)->where('periodo_lectivo_id', $request->periodo_lectivo_id)->first();
         $detalleNota = DetalleNota::where('docente_asignatura_id', $docenteAsignatura->id)->where('estudiante_id', $estudiante->id)->first();
-        if ($detalleNota==null) {
-            return response()->json('error', 404);
-        } else {
+        if ($detalleNota) {
             return response()->json(['detalleNota' => $detalleNota], 200);
+        } else {
+
+            return response()->json('error', 500);
         }
     }
 
